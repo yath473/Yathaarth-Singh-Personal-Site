@@ -2,14 +2,13 @@
 export const DEFAULT_WORD = "hello";
 export const MAX_LENGTH = 50;
 
-/** Trim, lowercase, collapse whitespace, cap length. Empty or non-string input falls back to DEFAULT_WORD. */
 export function normalize(input) {
   if (typeof input !== "string") return DEFAULT_WORD;
   const s = input.normalize("NFC").trim().toLowerCase().replace(/\s+/g, " ");
   return Array.from(s).slice(0, MAX_LENGTH).join("") || DEFAULT_WORD;
 }
 
-/** FNV-1a 32-bit hash over code points. */
+
 export function hash(str) {
   let h = 0x811c9dc5;
   for (const ch of str) {
@@ -19,7 +18,6 @@ export function hash(str) {
   return h >>> 0;
 }
 
-/** Same word always yields the same five-colour palette. */
 export function makePalette(input) {
   const word = normalize(input);
   const h = hash(word);
