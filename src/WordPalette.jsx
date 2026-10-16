@@ -1,146 +1,115 @@
 
-import { useEffect, useState } from "react";
-import { makePalette } from "./palette.js";
+import { useState } from "react";
 
-const interests = [
+const cards = [
   {
-    name: "Badminton",
-    emoji: "🏸",
+    title: "The Athlete",
+    subtitle: "Basketball",
+    emoji: "🏀",
+    color: "#E5F2E5",
+    accent: "#245638",
     description:
-      "Badminton has been a huge part of my life. From playing competitively to enjoying games with friends, it has taught me teamwork, discipline, and perseverance.",
+      "Basketball is one of my favorite ways to stay active, compete, and have fun. I love the fast-paced nature of the game and the teamwork that comes with it.",
   },
   {
-    name: "Rubik's Cubes",
+    title: "The Problem Solver",
+    subtitle: "Rubik's Cubes",
     emoji: "🧩",
+    color: "#FCE8D9",
+    accent: "#994C28",
     description:
-      "I love solving Rubik's Cubes! What started as a fun challenge became an interest in patterns, problem-solving, and finding creative solutions.",
+      "I've always enjoyed solving Rubik's Cubes. I love the challenge of recognizing patterns, improving my speed, and finding creative solutions to problems.",
   },
   {
-    name: "Music",
+    title: "The Music Enthusiast",
+    subtitle: "Frank Ocean, Travis Scott & Drake",
     emoji: "🎵",
+    color: "#EEE4FA",
+    accent: "#67418C",
     description:
-      "Music is one of my favorite ways to express creativity. I especially enjoy Indian music and making covers with my family.",
+      "Music is a big part of my everyday life. Some of my favorite artists are Frank Ocean, Travis Scott, and Drake. I love exploring different sounds, discovering new songs, and finding the perfect playlist for any mood.",
   },
   {
-    name: "Engineering",
-    emoji: "⚙️",
+    title: "The Tech Enthusiast",
+    subtitle: "AI, ML & Data Science",
+    emoji: "🤖",
+    color: "#DFEAFB",
+    accent: "#315D93",
     description:
-      "I enjoy exploring how things work, building projects, and using technology to solve real-world problems.",
+      "I'm fascinated by artificial intelligence, machine learning, and data science. I enjoy exploring how data can uncover patterns, power intelligent systems, and solve real-world problems.",
   },
 ];
 
 export default function WordPalette() {
-  const [value, setValue] = useState("Badminton");
-  const [copied, setCopied] = useState("");
+  const [flippedCards, setFlippedCards] = useState([]);
 
-  const { word, colors } = makePalette(value);
-
-  const selectedInterest = interests.find(
-    (interest) =>
-      interest.name.toLowerCase() === value.trim().toLowerCase()
-  );
-
-  useEffect(() => {
-    document.documentElement.style.setProperty("--accent", colors[0]);
-  }, [colors[0]]);
-
-  async function copy(color) {
-    try {
-      await navigator.clipboard.writeText(color);
-      setCopied(color);
-    } catch {
-      setCopied("");
-    }
-  }
-
-  function chooseInterest(name) {
-    setValue(name);
-    setCopied("");
+  function flipCard(index) {
+    setFlippedCards((previous) =>
+      previous.includes(index)
+        ? previous.filter((item) => item !== index)
+        : [...previous, index]
+    );
   }
 
   return (
-    <section aria-labelledby="play">
-      <h2 id="play">Get to Know Me Through Colors!</h2>
+    <section className="about-section" aria-labelledby="about-title">
+      <h2 id="about-title">Get to Know Me!</h2>
 
-      <p>
-        Every interest adds a different color to my life.
-        Click on one of my interests below to discover
-        its unique palette and learn a little more about me!
+      <p className="about-intro">
+        There are many different sides to who I am!
+        Flip through these cards to learn about
+        my interests, passions, and personality.
       </p>
 
-      <div className="interest-buttons">
-        {interests.map((interest) => (
-          <button
-            key={interest.name}
-            type="button"
-            className="interest-button"
-            aria-pressed={selectedInterest?.name === interest.name}
-            onClick={() => chooseInterest(interest.name)}
-          >
-            {interest.emoji} {interest.name}
-          </button>
-        ))}
+      <div className="card-grid">
+        {cards.map((card, index) => {
+          const isFlipped = flippedCards.includes(index);
+
+          return (
+            <button
+              key={card.title}
+              type="button"
+              className={`interest-card ${isFlipped ? "flipped" : ""}`}
+              onClick={() => flipCard(index)}
+              aria-pressed={isFlipped}
+              aria-label={`${card.title}. ${
+                isFlipped ? "Flip back" : "Flip to learn more"
+              }`}
+            >
+              <div className="card-inner">
+                <div
+                  className="card-front"
+                  style={{
+                    backgroundColor: card.color,
+                    color: card.accent,
+                  }}
+                >
+                  <span className="card-emoji">{card.emoji}</span>
+                  <h3>{card.title}</h3>
+                  <p>{card.subtitle}</p>
+                  <span className="flip-hint">
+                    Click to discover →
+                  </span>
+                </div>
+
+                <div
+                  className="card-back"
+                  style={{
+                    backgroundColor: card.accent,
+                    color: "#ffffff",
+                  }}
+                >
+                  <h3>{card.title}</h3>
+                  <p>{card.description}</p>
+                  <span className="flip-hint">
+                    Click to flip back ↩
+                  </span>
+                </div>
+              </div>
+            </button>
+          );
+        })}
       </div>
-
-      <div className="interest-description" aria-live="polite">
-        {selectedInterest ? (
-          <>
-            <h3>
-              {selectedInterest.emoji} {selectedInterest.name}
-            </h3>
-            <p>{selectedInterest.description}</p>
-          </>
-        ) : (
-          <p>
-            Your word creates its own palette!
-            Try one of my interests to learn more about me.
-          </p>
-        )}
-      </div>
-
-      <label htmlFor="word">
-        Or type your own word to create a palette!
-      </label>
-
-      <input
-        id="word"
-        value={value}
-        maxLength={50}
-        autoComplete="off"
-        placeholder="ocean, creativity, adventure..."
-        onChange={(e) => {
-          setValue(e.target.value);
-          setCopied("");
-        }}
-      />
-
-      <div
-        className="swatches"
-        role="group"
-        aria-label="Generated palette"
-      >
-        {colors.map((c, index) => (
-          <button
-            key={`${c}-${index}`}
-            type="button"
-            className="swatch"
-            style={{ background: c }}
-            aria-label={`Copy ${c}`}
-            onClick={() => copy(c)}
-          >
-            {c.replace(
-              /hsl\((\d+), (\d+)%, (\d+)%\)/,
-              "$1° $2 $3"
-            )}
-          </button>
-        ))}
-      </div>
-
-      <p id="caption" aria-live="polite">
-        {copied
-          ? `Copied ${copied}!`
-          : `Color palette inspired by "${word}"`}
-      </p>
     </section>
   );
 }
