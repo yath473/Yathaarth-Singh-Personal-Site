@@ -10,7 +10,7 @@ Requires Node.js 20+.
 git clone https://github.com/yath473/Yathaarth-Singh-s-Personal-Site.git
 cd Yathaarth-Singh-s-Personal-Site
 npm install
-npm run dev      # local dev server
+npm run dev     
 ```
 
 ## Tests
@@ -21,7 +21,7 @@ Vitest and React Testing Library. Covered: palette generation and determinism, e
 
 ## Build
 ```bash
-npm run build    # outputs dist/
+npm run build   
 ```
 
 ## CI and deployment
