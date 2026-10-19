@@ -18,7 +18,7 @@ const cards = [
     color: "#FCE8D9",
     accent: "#994C28",
     description:
-      "I've always enjoyed solving Rubik's Cubes. I love the challenge of recognizing patterns, improving my speed, and finding creative solutions to problems.",
+      "I've always enjoyed solving Rubik's Cubes such as 2x2's, 3x3's, etc. I love the challenge of recognizing patterns, improving my speed, and finding creative solutions to problems.",
   },
   {
     title: "The Music Enthusiast",

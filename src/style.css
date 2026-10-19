@@ -1,8 +1,4 @@
 
-/* ============================= */
-/* ORIGINAL WEBSITE STYLING      */
-/* ============================= */
-
 :root {
   --bg: #f6f7f4;
   --fg: #1d2320;
@@ -80,9 +76,6 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
-/* ============================= */
-/* ABOUT ME SECTION              */
-/* ============================= */
 
 .about-section {
   width: 100%;
@@ -188,9 +181,6 @@ a:focus-visible {
   transform: rotateY(180deg);
 }
 
-/* ============================= */
-/* CARD CONTENT                  */
-/* ============================= */
 
 .card-emoji {
   font-size: 3rem;
@@ -219,10 +209,6 @@ a:focus-visible {
   opacity: 0.75;
 }
 
-/* ============================= */
-/* HOVER AND FOCUS EFFECTS       */
-/* ============================= */
-
 .interest-card:hover .card-inner {
   filter: brightness(0.97);
 }
@@ -233,9 +219,6 @@ a:focus-visible {
   border-radius: 16px;
 }
 
-/* ============================= */
-/* RESPONSIVE DESIGN             */
-/* ============================= */
 
 @media (max-width: 500px) {
   .card-grid {
@@ -257,9 +240,6 @@ a:focus-visible {
   }
 }
 
-/* ============================= */
-/* ACCESSIBILITY                 */
-/* ============================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,
